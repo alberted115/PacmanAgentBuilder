@@ -1,5 +1,6 @@
 # PacmanAgentBuilder
-This is the Pac-Man game from [pacmancode.com](https://pacmancode.com/) with extensions that make agent building easier.
+This is the Pac-Man game from [pacmancode.com](https://pacmancode.com/) with extensions that make agent building easier. \
+It doesn't contain any algorithms like pathfinding. It only helps in the creation of a pacman agent from scratch.
 
 ## Getting started
 1. Clone the repository and open it in Rider.
