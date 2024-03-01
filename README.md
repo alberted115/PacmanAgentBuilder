@@ -3,10 +3,10 @@ This is the Pac-Man game from [pacmancode.com](https://pacmancode.com/) with ext
 It doesn't contain any algorithms like pathfinding. It only helps in the creation of a pacman agent from scratch.
 
 ## Getting started
-1. Clone the repository and open it in Rider.
+1. Clone the repository and open it in PyCharm.
 2. Create a local Python interpreter.
 3. Install `pygame` and `numpy`.
-4. Add a Python run configuration to Rider that runs the `pacmanAgentBuilder/runner.py` file, with the `/pacman_complete` folder as the working directory.
+4. Add a Python run configuration to PyCharm that runs the `pacmanAgentBuilder/runner.py` file, with the `/pacman_complete` folder as the working directory.
 5. Write your agent code in the `/pacmanAgentBuilder/agents/MyFirstAgent`.
 6. Run the configuration to see your agent play! The agent will play 10 games, and the average score will be printed to the console.
 
