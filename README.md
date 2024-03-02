@@ -19,6 +19,7 @@ For better testing, you can change the following arguments in the `runner.py` fi
 - `startLevel` The start level, which determines the level the agent should start on (0 is the first level, 1 is the second).
 - `ghostsEnabled` If ghosts should be enabled.
 - `freightEnabled` If the power of power pellets should be ignored.
+- `lockDeltaTime` If true, the game will run as fast as possible. If false, the game will run at the speed set in `gameSpeed`.
 - `logging` Whether the program should log information to the console.
 
 ## Classes

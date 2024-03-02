@@ -18,12 +18,14 @@ def runGameWithHuman(gameSpeed=1, startLives=3) -> int:
 
 
 def runGameWithAgent(agentType: type[IAgent], gameSpeed=3, startLives=3, startLevel: int = 0,
-                     ghostsEnabled: bool = True, freightEnabled: bool = True) -> GameStats:
+                     ghostsEnabled: bool = True, freightEnabled: bool = True,
+                     lockDeltaTime: bool = False) -> GameStats:
     if gameSpeed < 0.1 or 10 < gameSpeed:
         raise ValueError(f"gameSpeed ({gameSpeed}) must be between 0.1 and 10 (inclusive). Otherwise the game breaks.")
 
     game = GameController(gameSpeed=gameSpeed, startLives=startLives, isHumanPlayer=False,
-                          startLevel=startLevel, ghostsEnabled=ghostsEnabled, freightEnabled=freightEnabled)
+                          startLevel=startLevel, ghostsEnabled=ghostsEnabled, freightEnabled=freightEnabled,
+                          lockDeltaTime=lockDeltaTime)
     agent = agentType(gameController=game)
     game.startGame(agent=agent)
     while True:
@@ -34,7 +36,7 @@ def runGameWithAgent(agentType: type[IAgent], gameSpeed=3, startLives=3, startLe
 
 def calculatePerformanceOverXGames(agentClass: type[IAgent], gameCount: int, gameSpeed=5,
                                    startLevel: int = 0, ghostsEnabled: bool = True, freightEnabled: bool = True,
-                                   logging=False):
+                                   lockDeltaTime=False,logging=False):
     # print agent name
 
     gameStats = []
@@ -43,7 +45,8 @@ def calculatePerformanceOverXGames(agentClass: type[IAgent], gameCount: int, gam
             print(f"Running game {i + 1} of {gameCount}...")
 
         gameStats.append(runGameWithAgent(agentClass, gameSpeed=gameSpeed, startLives=1, startLevel=startLevel,
-                                          ghostsEnabled=ghostsEnabled, freightEnabled=freightEnabled))
+                                          ghostsEnabled=ghostsEnabled, freightEnabled=freightEnabled,
+                                          lockDeltaTime=lockDeltaTime))
 
         if logging:
             print(f"Game {i + 1} result: {gameStats[i]}")
