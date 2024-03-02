@@ -32,7 +32,7 @@ It contains all the necessary information that the agent will need to beat the g
 - `getGhostCommonMode()` (returned the mode that most ghosts are in)
 
 ### DebugHelper class
-This is a class with static methods that can help with debugging. These methods can be called from anywhere in your agent code. It also has a few colors that can be used when calling the draw methods.
+This is a class with static methods that can help with debugging. These methods can be called from anywhere in your agent code. the DebugHelder class also contains a few colors that can be used when calling the draw methods. \
 **These methods include:**
 - `DebugHelper.pauseGame()`
 - `DebugHelper.drawLine()`
