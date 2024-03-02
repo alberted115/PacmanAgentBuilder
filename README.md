@@ -3,17 +3,16 @@ This is the Pac-Man game from [pacmancode.com](https://pacmancode.com/) with ext
 It doesn't contain any algorithms like pathfinding. It only helps in the creation of a pacman agent from scratch.
 
 ## Getting started
-1. Clone the repository and open it in PyCharm.
-2. Create a local Python interpreter.
+1. Fork and clone the repository, then open it in your favorite IDE.
+2. (optional) Create a local Python interpreter.
 3. Install `pygame` and `numpy`.
-4. Add a Python run configuration to PyCharm that runs the `pacmanAgentBuilder/runner.py` file, with the `/pacman_complete` folder as the working directory.
-5. Write your agent code in the `/pacmanAgentBuilder/agents/MyFirstAgent`.
-6. Run the configuration to see your agent play! The agent will play 10 games, and the average score will be printed to the console.
+5. Write your agent code in the `PacmanAgentBuilder/pacmanAgentBuilder/agents/MyFirstAgent`.
+6. Run the `runner.py` file in the root folder or use the command `python3 runner.py` command to see your agent play! The agent will play 10 games, and the average score will be printed to the console.
 
 > I recommend you periodically create a new agent class so that you can compare with previous versions of your agent.
 
 ## Changing game variables
-For better testing, you can change the following arguments in the `pacmanAgentBuilder/runner.py` file:
+For better testing, you can change the following arguments in the `runner.py` file:
 - `agentClass` Which agent you want to run.
 - `gameCount` How many games the agent will play.
 - `gameSpeed` How fast the game should run. Between 0.1 and 10 (going over 10 may cause the game to break. If you have a low-end PC, going over 5 might also cause issues).
