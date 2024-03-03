@@ -5,18 +5,18 @@ from PacmanAgentBuilder.agents.Iagent import IAgent
 from PacmanAgentBuilder.utils.debugHelper import DebugHelper
 from PacmanAgentBuilder.utils.observation import Observation
 from Pacman_Complete.constants import *
-from Pacman_Complete.vector import Vector2
 
 
 class HumanAgent(IAgent):
+    """
+    This is a simple agent that allows a human to play the game.
+    """
     def __init__(self, gameController):
         super().__init__(gameController)
 
     def calculateNextMove(self):
         obs = Observation(self.gameController)
         self.takeStats(obs)
-
-        DebugHelper.drawMap(obs)
 
         key_pressed = pygame.key.get_pressed()
         if key_pressed[K_UP]:

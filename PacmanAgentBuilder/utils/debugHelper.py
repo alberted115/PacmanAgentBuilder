@@ -4,11 +4,13 @@ import pygame
 from pygame import Surface
 
 from PacmanAgentBuilder.utils.observation import Observation
-from PacmanAgentBuilder.utils.utils import isPortalPath
 from Pacman_Complete.vector import Vector2
 
 
 class DebugHelper(object):
+    """
+    The DebugHelper offers static methods that can help with debugging agent behavior.
+    """
     _instance = None
 
     shouldPause = False
@@ -36,39 +38,81 @@ class DebugHelper(object):
 
     @staticmethod
     def pauseGame():
+        """
+            Pauses the game.
+        """
         DebugHelper.shouldPause = True
 
     @staticmethod
     def disable():
+        """
+            Disables the DebugHelper.
+        """
         DebugHelper._enabled = False
 
     @staticmethod
     def enable():
+        """
+            Enables the DebugHelper.
+        """
         DebugHelper._enabled = True
 
     @staticmethod
     def drawLine(startVector: Vector2, endVector: Vector2, color: tuple[int, int, int], width: int = 5):
+        """
+            Draws a line between two vectors.
+            :param startVector: The starting point of the line.
+            :param endVector: The ending point of the line.
+            :param color: The color of the line.
+            :param width: The width of the line.
+        """
         DebugHelper.__addDrawObject__("line",
                                       [startVector.asInt(), endVector.asInt(), color, width])
 
     @staticmethod
     def drawDashedLine(startVector: Vector2, endVector: Vector2, color: tuple[int, int, int], width: int = 5,
                        dashLength: int = 10):
+        """
+            Draws a dashed line between two vectors.
+            :param startVector: The starting point of the dashed line.
+            :param endVector: The ending point of the dashed line.
+            :param color: The color of the dashed line.
+            :param width: The width of the dashed line.
+            :param dashLength: The length of the dashes in the line.
+        """
         DebugHelper.__addDrawObject__("dashedLine",
                                       [startVector.asInt(), endVector.asInt(), color, width, dashLength])
 
     @staticmethod
-    def drawDashedCircle(center: Vector2, radius: float, color: tuple[int, int, int], width=1, dash_length=10):
-        DebugHelper.__addDrawObject__("dashedCircle",
-                                      [center.asInt(), radius, color, width, dash_length])
-
-    @staticmethod
     def drawDot(center: Vector2, radius: float, color: tuple[int, int, int], ):
+        """
+            Draws a dot at a vector.
+            :param center: The center of the dot.
+            :param radius: The radius of the dot.
+            :param color: The color of the dot.
+        """
         DebugHelper.__addDrawObject__("dot",
                                       [center.asInt(), color, radius])
 
     @staticmethod
+    def drawDashedCircle(center: Vector2, radius: float, color: tuple[int, int, int], width=1, dash_length=10):
+        """
+            Draws a dashed circle around a vector.
+            :param center: The center of the dashed circle.
+            :param radius: The radius of the dashed circle.
+            :param color: The color of the dashed circle.
+            :param width: The width of the dashes.
+            :param dash_length: The length of the dashes.
+        """
+        DebugHelper.__addDrawObject__("dashedCircle",
+                                      [center.asInt(), radius, color, width, dash_length])
+
+    @staticmethod
     def drawMap(obs: Observation):
+        """
+            Draws the map/graph of the current level that Pac-Man and the ghosts are moving on.
+            :param obs: The current Observation object.
+        """
         for node in obs.nodeGroup.nodesLUT.values():
             DebugHelper.drawDot(node.position, 4, DebugHelper.BLUE)
 
@@ -119,12 +163,6 @@ class DebugHelper(object):
 
         for drawObjectType in DebugHelper._shapesToDraw.keys():
             for drawObject in DebugHelper._shapesToDraw[drawObjectType]:
-                # skip portal path
-                if drawObjectType in ["line", "dashedLine"] and \
-                        isPortalPath(Vector2(drawObject[0][0], drawObject[0][1]),
-                                     Vector2(drawObject[1][0], drawObject[1][1])):
-                    continue
-
                 if drawObjectType == "line":
                     pygame.draw.line(surface=DebugHelper._screen,
                                      start_pos=drawObject[0], end_pos=drawObject[1],

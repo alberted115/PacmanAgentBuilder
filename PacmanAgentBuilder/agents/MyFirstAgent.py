@@ -9,6 +9,9 @@ from Pacman_Complete.vector import Vector2
 
 
 class MyFirstAgent(IAgent):
+    """
+    for documentation see https://github.com/SpicyOverlord/PacmanAgentBuilder
+    """
     def __init__(self, gameController):
         super().__init__(gameController)
 
@@ -17,10 +20,14 @@ class MyFirstAgent(IAgent):
         obs = Observation(self.gameController)
         self.takeStats(obs)
 
-        # this draws the graph of the whole map to the screen
+        # --- WRITE YOUR CODE BELOW HERE ---
+
+        # uncomment this to draw the graph of the current level to the screen:
         # DebugHelper.drawMap(obs)
 
-        # --- WRITE YOUR CODE BELOW HERE ---
-        # you need to return UP, DOWN, LEFT, RIGHT or STOP (where STOP means you don't change direction)
+        pacmanPosition = obs.getPacmanPosition()
+        ghostsPositions = obs.getGhostPositions()
+        pelletPositions = obs.getPelletPositions()
 
+        # you need to return UP, DOWN, LEFT, RIGHT or STOP (where STOP means you don't change direction)
         return STOP
