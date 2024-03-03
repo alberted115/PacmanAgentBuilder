@@ -36,7 +36,7 @@ You can adjust these variables in the `runner.py` file:
 
 ### Observation Class
 
-The cornerstone of agent development, this class provides all the necessary information that the agent will need to play the game:
+The cornerstone of agent development, this class contains all the necessary information that the agent will need to play the game:
 
 - `getPacmanPosition()`: Returns Pac-Man's current position.
 - `getPacmanTarget()`: Returns the Node that Pac-Man is currently moving towards.
@@ -63,7 +63,16 @@ The DebugHelper offers static methods that can help with debugging agent behavio
 - `DebugHelper.drawDashedLine()`: Draws a dashed line between two vectors.
 - `DebugHelper.drawDot()`: Draws a dot at a vector.
 - `DebugHelper.drawDashedCircle()`: Draws a dashed circle around a vector.
-- `DebugHelper.drawMap()`: Draws the map/graph of the current level that Pac-Man and the ghosts are moving on.
+- `DebugHelper.drawMap()`: Draws the map/graph of the current level that Pac-Man and the ghosts are moving on. \
+
+**The colors are:**
+- `DebugHelper.GREEN`
+- `DebugHelper.LIGHTBLUE`
+- `DebugHelper.YELLOW`
+- `DebugHelper.WHITE`
+- `DebugHelper.BLUE`
+- `DebugHelper.PURPLE`
+- `DebugHelper.RED`
 
 ### GameStats Class
 
