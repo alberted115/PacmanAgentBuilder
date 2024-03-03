@@ -48,4 +48,4 @@ The Utils file contains a few functions that may be helpful when building an age
 ### GameStats class
 This is the class that is returned when you run a game with an agent. It contains information about the game played, such as score, pellets eaten, and actionsTaken (how many times the agent was asked for a move by the game).
 
-The `calculateCombinedRating` method is the fitness function used to determine the performance of an agent over x games. It currently just calculates the average score. **If you want a more complex fitness function, feel free to edit the method!**
+The `calculatePerformance` method is the fitness function used to determine the performance of an agent over x games. It currently just calculates the average score. **If you want a more accurate/complex fitness function, feel free to edit the method!**

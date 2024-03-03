@@ -16,7 +16,7 @@ class GameStats(object):
                 f"levelsCompleted={self.levelsCompleted})")
 
     @staticmethod
-    def calculateCombinedRating(gameStats: list['GameStats']):
+    def calculatePerformance(gameStats: list['GameStats']):
         baseScores = [game.score for game in gameStats]
 
         averageBaseScore = sum(baseScores) / len(baseScores)

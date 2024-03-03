@@ -51,7 +51,7 @@ def calculatePerformanceOverXGames(agentClass: type[IAgent], gameCount: int, gam
         if logging:
             print(f"Game {i + 1} result: {gameStats[i]}")
 
-    performance = GameStats.calculateCombinedRating(gameStats)
+    performance = GameStats.calculatePerformance(gameStats)
 
     if logging:
         print(f"Performance over {gameCount} games: {performance}")
