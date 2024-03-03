@@ -5,9 +5,9 @@ It doesn't contain any algorithms like pathfinding. It only helps in the creatio
 ## Getting started
 1. Fork and clone the repository, then open it in your favorite IDE.
 2. (optional) Create a local Python interpreter.
-3. Install `pygame` and `numpy`.
+3. Install the `pygame` and `numpy` libraries.
 5. Write your agent code in the `PacmanAgentBuilder/pacmanAgentBuilder/agents/MyFirstAgent`.
-6. Run the `runner.py` file in the root folder or use the command `python3 runner.py` command to see your agent play! The agent will play 10 games, and the average score will be printed to the console.
+6. Run the `runner.py` file in the root folder to see your agent play! The agent will play 10 games, and the average score will be printed to the console.
 
 > I recommend you periodically create a new agent class so that you can compare with previous versions of your agent.
 
@@ -32,7 +32,7 @@ It contains all the necessary information that the agent will need to beat the g
 - `getGhostCommonMode()` (returned the mode that most ghosts are in)
 
 ### DebugHelper class
-This is a class with static methods that can help with debugging. These methods can be called from anywhere in your agent code. It also has a few colors that can be used when calling the draw methods.
+This is a class with static methods that can help with debugging. These methods can be called from anywhere in your agent code. the DebugHelder class also contains a few colors that can be used when calling the draw methods. \
 **These methods include:**
 - `DebugHelper.pauseGame()`
 - `DebugHelper.drawLine()`
