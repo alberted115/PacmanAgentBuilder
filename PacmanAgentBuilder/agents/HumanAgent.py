@@ -16,7 +16,7 @@ class HumanAgent(IAgent):
 
     def calculateNextMove(self):
         obs = Observation(self.gameController)
-        self.takeStats(obs)
+        self.takeStats()
 
         key_pressed = pygame.key.get_pressed()
         if key_pressed[K_UP]:

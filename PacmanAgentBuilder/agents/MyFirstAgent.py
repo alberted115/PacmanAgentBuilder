@@ -18,7 +18,7 @@ class MyFirstAgent(IAgent):
     def calculateNextMove(self):
         # do not touch these 2 lines!
         obs = Observation(self.gameController)
-        self.takeStats(obs)
+        self.takeStats()
 
         # --- WRITE YOUR CODE BELOW HERE ---
 
@@ -28,6 +28,7 @@ class MyFirstAgent(IAgent):
         pacmanPosition = obs.getPacmanPosition()
         ghostsPositions = obs.getGhostPositions()
         pelletPositions = obs.getPelletPositions()
+        PowerPelletPositions = obs.getPowerPelletPositions()
 
         # you need to return UP, DOWN, LEFT, RIGHT or STOP (where STOP means you don't change direction)
         return STOP

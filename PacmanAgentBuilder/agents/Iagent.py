@@ -18,8 +18,8 @@ class IAgent(ABC):
     def calculateNextMove(self):
         raise Exception("NotImplementedException")
 
-    def takeStats(self, obs: Observation):
+    def takeStats(self):
         self.actionsTaken += 1
-        self.pelletsEatenThisLevel = obs.pelletGroup.numEaten
+        self.pelletsEatenThisLevel = self.gameController.pellets.numEaten
         pass
 
