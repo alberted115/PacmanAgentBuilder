@@ -16,13 +16,16 @@ from PacmanAgentBuilder.agents.Iagent import IAgent
 
 
 class GameController(object):
-    def __init__(self, gameSpeed: int, startLives: int, isHumanPlayer: bool = False,
-                 startLevel: int = 0, ghostsEnabled: bool = True, freightEnabled: bool = True,
-                 lockDeltaTime: bool = False):
+    def __init__(self, gameSpeed: int,
+                 startLives: int,
+                 startLevel: int = 0,
+                 ghostsEnabled: bool = True,
+                 freightEnabled: bool = True,
+                 lockDeltaTime: bool = False
+                 ):
         pygame.init()
 
         self.gameSpeed = gameSpeed
-        self.isHumanPlayer = isHumanPlayer
         self.gameOver = False
         self.ghostsEnabled = ghostsEnabled
         self.freightEnabled = freightEnabled
@@ -37,7 +40,7 @@ class GameController(object):
         self.background_flash = None
         self.clock = pygame.time.Clock()
         self.fruit = None
-        self.pause = Pause(isHumanPlayer)
+        self.pause = Pause(False)
         self.level = startLevel
         self.lives = startLives
         self.score = 0
@@ -62,10 +65,7 @@ class GameController(object):
 
     def startGame(self, agent: IAgent = None):
         self.agent = agent
-        if self.isHumanPlayer:
-            self.textgroup.showText(READYTXT)
-        else:
-            self.textgroup.hideText()
+        self.textgroup.hideText()
 
         self.mazedata.loadMaze(self.level)
         self.mazesprites = MazeSprites(
@@ -76,7 +76,7 @@ class GameController(object):
         self.nodes = NodeGroup(f"Pacman_complete/{self.mazedata.obj.name}.txt")
         self.mazedata.obj.setPortalPairs(self.nodes)
         self.mazedata.obj.connectHomeNodes(self.nodes)
-        self.pacman = Pacman(self.nodes.getNodeFromTiles(*self.mazedata.obj.pacmanStart), self.isHumanPlayer, agent)
+        self.pacman = Pacman(self.nodes.getNodeFromTiles(*self.mazedata.obj.pacmanStart), agent)
         self.pellets = PelletGroup(f"Pacman_complete/{self.mazedata.obj.name}.txt")
         self.ghosts = GhostGroup(self.nodes.getStartTempNode(), self.pacman)
 
@@ -151,9 +151,6 @@ class GameController(object):
                         if not self.pause.paused:
                             self.textgroup.hideText()
                             self.showEntities()
-                        elif self.isHumanPlayer:
-                            self.textgroup.showText(PAUSETXT)
-                            # self.hideEntities()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:  # 1 is the left mouse button
                     # Get the mouse position
@@ -176,7 +173,7 @@ class GameController(object):
             if self.pellets.isEmpty():
                 self.flashBG = True
                 self.hideEntities()
-                self.pause.setPause(pauseTime=3 if self.isHumanPlayer else 0, func=self.nextLevel)
+                self.pause.setPause(0, func=self.nextLevel)
 
     def checkGhostEvents(self):
         for ghost in self.ghosts:
@@ -187,7 +184,7 @@ class GameController(object):
                     self.updateScore(ghost.points)
                     self.textgroup.addText(str(ghost.points), WHITE, ghost.position.x, ghost.position.y, 8, time=1)
                     self.ghosts.updatePoints()
-                    self.pause.setPause(pauseTime=1 if self.isHumanPlayer else 0, func=self.showEntities)
+                    self.pause.setPause(0, func=self.showEntities)
                     ghost.startSpawn()
                     self.nodes.allowHomeAccess(ghost)
                 elif ghost.mode.current is not SPAWN:
@@ -197,11 +194,9 @@ class GameController(object):
                         self.pacman.die()
                         self.ghosts.hide()
                         if self.lives <= 0:
-                            if self.isHumanPlayer:
-                                self.textgroup.showText(GAMEOVERTXT)
-                            self.pause.setPause(pauseTime=3 if self.isHumanPlayer else 0, func=self.endGame)
+                            self.pause.setPause(0, func=self.endGame)
                         else:
-                            self.pause.setPause(pauseTime=3 if self.isHumanPlayer else 0, func=self.resetLevel)
+                            self.pause.setPause(0, func=self.resetLevel)
 
     def checkFruitEvents(self):
         if self.pellets.numEaten == 50 or self.pellets.numEaten == 140:
@@ -234,7 +229,7 @@ class GameController(object):
     def nextLevel(self):
         self.showEntities()
         self.level += 1
-        self.pause.paused = self.isHumanPlayer
+        self.pause.paused = False
         self.startGame(agent=self.agent)
         self.textgroup.updateLevel(self.level)
 
@@ -248,8 +243,6 @@ class GameController(object):
         self.pacman.reset()
         self.ghosts.reset()
         self.fruit = None
-        if self.isHumanPlayer:
-            self.textgroup.showText(READYTXT)
 
     def updateScore(self, points):
         self.score += points

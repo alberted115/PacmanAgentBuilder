@@ -4,8 +4,7 @@ from Pacman_Complete.run import GameController
 
 
 def runGameWithAgent(agentType: type[IAgent], gameSpeed=3, startLives=3, startLevel: int = 0,
-                     ghostsEnabled: bool = True, freightEnabled: bool = True,
-                     lockDeltaTime: bool = False) -> GameStats:
+                     ghostsEnabled: bool = True, freightEnabled: bool = True, lockDeltaTime: bool = False) -> GameStats:
     """
         Runs a single game with the specified agent.
 
@@ -17,15 +16,21 @@ def runGameWithAgent(agentType: type[IAgent], gameSpeed=3, startLives=3, startLe
         :param freightEnabled: Toggle if the effect of power pellets should be ignored (ghosts turning blue and stops chasing).
         :param lockDeltaTime: When enabled, the game will run at the highest possible speed regardless of the gameSpeed setting. This provides a stable test environment as the game speed is bottlenecked by your hardware, and can therefore not go faster than your hardware can handle.
         :return: GameStats object containing the statistics of the game.
-        """
+    """
 
     if gameSpeed < 0.1 or 5 < gameSpeed:
         raise ValueError(f"gameSpeed ({gameSpeed}) must be between 0.1 and 10 (inclusive). Otherwise the game breaks.")
 
-    game = GameController(gameSpeed=gameSpeed, startLives=startLives, isHumanPlayer=False,
-                          startLevel=startLevel, ghostsEnabled=ghostsEnabled, freightEnabled=freightEnabled,
-                          lockDeltaTime=lockDeltaTime)
+    game = GameController(
+        gameSpeed=gameSpeed,
+        startLives=startLives,
+        startLevel=startLevel,
+        ghostsEnabled=ghostsEnabled,
+        freightEnabled=freightEnabled,
+        lockDeltaTime=lockDeltaTime
+    )
     agent = agentType(gameController=game)
+
     game.startGame(agent=agent)
     while True:
         game.update()

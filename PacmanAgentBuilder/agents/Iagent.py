@@ -15,7 +15,7 @@ class IAgent(ABC):
 
 
     @abstractmethod
-    def calculateNextMove(self):
+    def calculateNextMove(self, obs: Observation):
         raise Exception("NotImplementedException")
 
     def takeStats(self):

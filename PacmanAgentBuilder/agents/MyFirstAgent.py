@@ -1,3 +1,5 @@
+import random
+
 import pygame
 from pygame import K_UP, K_DOWN, K_LEFT, K_RIGHT
 
@@ -15,20 +17,18 @@ class MyFirstAgent(IAgent):
     def __init__(self, gameController):
         super().__init__(gameController)
 
-    def calculateNextMove(self):
-        # do not touch these 2 lines!
-        obs = Observation(self.gameController)
-        self.takeStats()
-
-        # --- WRITE YOUR CODE BELOW HERE ---
-
+    def calculateNextMove(self, obs: Observation):
         # uncomment this to draw the graph of the current level to the screen:
         # DebugHelper.drawMap(obs)
 
         pacmanPosition = obs.getPacmanPosition()
-        ghostsPositions = obs.getGhostPositions()
-        pelletPositions = obs.getPelletPositions()
-        PowerPelletPositions = obs.getPowerPelletPositions()
+        pacmanTarget = obs.getPacmanTarget()
+
+        # draw a purple line to pacman's target
+        DebugHelper.drawLine(pacmanPosition, pacmanTarget, DebugHelper.PURPLE, 5)
+        # if pacman is on a node, move to a random direction
+        if pacmanPosition == pacmanTarget:
+            return random.choice([UP, DOWN, LEFT, RIGHT])
 
         # you need to return UP, DOWN, LEFT, RIGHT or STOP (where STOP means you don't change direction)
         return STOP

@@ -11,7 +11,6 @@ To dive into agent development, follow these steps:
 3. Ensure that the `pygame` and `numpy` libraries are installed. These can be installed using the command `pip install pygame numpy` in your terminal.
 4. Begin writing your own agent within the `PacmanAgentBuilder/pacmanAgentBuilder/agents/MyFirstAgent.py` file.
 5. Execute the `runner.py` located in the project's root directory to test your agent's performance. Your agent will play 10 games, after which the average score will be printed in your console.
-If you want to see your agent play the game in real-time, set the `lockDeltaTime` argument in the `runner.py` file to `False`.
 
 > [!TIP]
 > Regularly copy your agent class to maintain a history of your progress, so you can observe your improvements and compare them with previous versions.
