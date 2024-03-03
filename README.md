@@ -1,51 +1,74 @@
 # PacmanAgentBuilder
-This is the Pac-Man game from [pacmancode.com](https://pacmancode.com/) with extensions that make agent building easier. \
-It doesn't contain any algorithms like pathfinding. It only helps in the creation of a pacman agent from scratch.
 
-## Getting started
-1. Fork and clone the repository, then open it in your favorite IDE.
-2. (optional) Create a local Python interpreter.
-3. Install the `pygame` and `numpy` libraries.
-5. Write your agent code in the `PacmanAgentBuilder/pacmanAgentBuilder/agents/MyFirstAgent`.
-6. Run the `runner.py` file in the root folder to see your agent play! The agent will play 10 games, and the average score will be printed to the console.
+PacmanAgentBuilder enhances the game of Pac-Man from [pacmancode.com](https://pacmancode.com/), providing utilities that facilitate the development of custom Pac-Man agents. It streamlines the agent creation process without including any predetermined algorithms (such as pathfinding), helping developers to implement their own unique strategies from scratch.
 
-> I recommend you periodically create a new agent class so that you can compare with previous versions of your agent.
+## Getting Started
 
-## Changing game variables
-For better testing, you can change the following arguments in the `runner.py` file:
-- `agentClass` Which agent you want to run.
-- `gameCount` How many games the agent will play.
-- `gameSpeed` How fast the game should run. Between 0.1 and 10 (going over 10 may cause the game to break. If you have a low-end PC, going over 5 might also cause issues).
-- `startLevel` The start level, which determines the level the agent should start on (0 is the first level, 1 is the second).
-- `ghostsEnabled` If ghosts should be enabled.
-- `freightEnabled` If the power of power pellets should be ignored.
-- `lockDeltaTime` If true, the game will run as fast as possible. If false, the game will run at the speed set in `gameSpeed`. **This is great for testing as the game can't "break" unlike when you use `gameSpeed` to set the speed of the game.**
-- `logging` Whether the program should log information to the console.
+To dive into agent development, follow these steps:
 
-## Classes
-### Observation class
-This is a class that is used in agent building.
-It contains all the necessary information that the agent will need to beat the game.
-- `getPacmanPosition()`
-- `getPelletPositions()`
-- `getGhostPositions()`
-- `getGhostCommonMode()` (returned the mode that most ghosts are in)
+1. Fork and clone the repository to your local machine.
+2. (Optional) Set up a dedicated Python interpreter for the project on your system.
+3. Ensure that the `pygame` and `numpy` libraries are installed. These can be installed using the command `pip install pygame numpy` in your terminal.
+4. Begin writing your own agent within the `PacmanAgentBuilder/pacmanAgentBuilder/agents/MyFirstAgent.py` file.
+5. Execute the `runner.py` located in the project's root directory to test your agent's performance. Your agent will play 10 games, after which the average score will be printed in your console.
+If you want to see your agent play the game in real-time, set the `lockDeltaTime` argument in the `runner.py` file to `False`.
 
-### DebugHelper class
-This is a class with static methods that can help with debugging. These methods can be called from anywhere in your agent code. the DebugHelder class also contains a few colors that can be used when calling the draw methods. \
-**These methods include:**
-- `DebugHelper.pauseGame()`
-- `DebugHelper.drawLine()`
-- `DebugHelper.drawDot()`
-- `DebugHelper.drawMap()`
+> [!TIP]
+> Regularly back up your agent class to maintain a history of your progress, so you can observe your improvements and compare them with previous versions.
 
-### Utils functions
-The Utils file contains a few functions that may be helpful when building an agent. These include:
-- `manhattanDistance()`
-- `distanceSquared()`
-- `directionToString()`
+## Customizing Game Variables
 
-### GameStats class
-This is the class that is returned when you run a game with an agent. It contains information about the game played, such as score, pellets eaten, and actionsTaken (how many times the agent was asked for a move by the game).
+You can adjust these variables in the `runner.py` file:
 
-The `calculatePerformance` method is the fitness function used to determine the performance of an agent over x games. It currently just calculates the average score. **If you want a more accurate/complex fitness function, feel free to edit the method!**
+- `agentClass`: Specify the agent to be evaluated.
+- `gameCount`: Number of games the agent will play.
+- `gameSpeed`: Sets the speed of the game from 0.1 (slow) to 5 (fast). Note: For a higher speed, enable `lockDeltaTime`.
+- `startLevel`: Choose the starting level for the agent (0 for level one, 1 for level two, and so on).
+- `ghostsEnabled`: Toggle ghosts on or off.
+- `freightEnabled`: Toggle if the effect of power pellets should be ignored (ghosts turning blue and stops chasing).
+- `lockDeltaTime`: When enabled, the game will run at the highest possible speed regardless of the `gameSpeed` setting. This provides a stable test environment as the game speed is bottlenecked by your hardware, and can therefore not go faster than your hardware can handle.
+- `logging`: Toggle the logging of game-related information to the console while the agent is playing.
+
+> [!TIP]
+> If you want to make the game window larger or smaller, you can change the `WINDOWSIZE` constant (line 1) in the `Pacman_Complete/Constants.py` file.
+
+## Classes and Utilities
+
+### Observation Class
+
+The cornerstone of agent development, this class provides all the necessary information that the agent will need to play the game:
+
+- `getPacmanPosition()`: Returns Pac-Man's current position.
+- `getPacmanTarget()`: Returns the Node that Pac-Man is currently moving towards.
+- `getPelletPositions()`: Returns a list of all non-eaten pellets' position.
+- `getPowerPelletPositions()`: Returns a list of all non-eaten power-pellets' position.
+- `getGhostModes()`: Returns a list of all ghosts' modes.
+- `getGhostCommonMode()`: Returns the mode that most ghosts are in (CHASE, SCATTER, etc.).
+- `getGhosts()`: Returns a list of the ghost objects.
+- `getGhostPositions()`: Returns a list of the ghosts' positions.
+- `getGhost()`: Returns a ghost object from the provided ghost constant (BLINKY, PINKY, etc.)
+- `getBlinky()`: Returns the Blinky object.
+- `getPinky()`: Returns the Pinky object.
+- `getInky()`: Returns the Inky object.
+- `getClyde()`: Returns the Clyde object.
+
+### DebugHelper Class 
+
+The DebugHelper offers static methods that can help with debugging agent behavior and also includes a few colors that can be used in the draw methods:
+
+- `DebugHelper.pauseGame()`: Pauses the game, allowing for step-by-step analysis. Note: to unpause the game, hit the space bar.
+- `DebugHelper.disable()`: Disables the DebugHelper.
+- `DebugHelper.enable()`: Enables the DebugHelper.
+- `DebugHelper.drawLine()`: Draws a line between two vectors.
+- `DebugHelper.drawDashedLine()`: Draws a dashed line between two vectors.
+- `DebugHelper.drawDot()`: Draws a dot at a vector.
+- `DebugHelper.drawDashedCircle()`: Draws a dashed circle around a vector.
+- `DebugHelper.drawMap()`: Draws the map/graph of the current level that Pac-Man and the ghosts are moving on.
+
+### GameStats Class
+
+A GameStats object is returned after an agent has finished a game. It contains information about the game played (the score, levels completed, pellets eaten, and actions taken).
+
+- `GameStats.calculatePerformance()`: This function acts as a performance evaluator over multiple games. It currently calculates the average score of the games.
+> [!TIP]
+> If you want a more accurate/complex performance function, feel free to edit the `calculatePerformance` method.
