@@ -6,8 +6,8 @@ class GameStats(object):
     def __init__(self, game: GameController, agent: IAgent):
         self.actionsTaken = agent.actionsTaken
         self.score = game.score
-        self.levelsCompleted = game.level
-        self.totalPelletsEaten = game.level * 240 + agent.pelletsEatenThisLevel
+        self.levelsCompleted = game.level - game.startLevel
+        self.totalPelletsEaten = self.levelsCompleted * 240 + agent.pelletsEatenThisLevel
 
     def __str__(self):
         return (f"GameStats(score={self.score}, "

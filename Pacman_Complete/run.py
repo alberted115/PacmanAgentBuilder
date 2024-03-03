@@ -27,6 +27,7 @@ class GameController(object):
         self.ghostsEnabled = ghostsEnabled
         self.freightEnabled = freightEnabled
         self.lockDeltaTime = lockDeltaTime
+        self.startLevel = startLevel
 
         self.screen = pygame.display.set_mode(SCREENSIZE, 0, 32)
         DebugHelper.setScreen(self.screen)
