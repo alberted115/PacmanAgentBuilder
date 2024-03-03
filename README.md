@@ -14,7 +14,7 @@ To dive into agent development, follow these steps:
 If you want to see your agent play the game in real-time, set the `lockDeltaTime` argument in the `runner.py` file to `False`.
 
 > [!TIP]
-> Regularly back up your agent class to maintain a history of your progress, so you can observe your improvements and compare them with previous versions.
+> Regularly copy your agent class to maintain a history of your progress, so you can observe your improvements and compare them with previous versions.
 
 ## Customizing Game Variables
 
