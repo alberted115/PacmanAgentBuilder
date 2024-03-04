@@ -39,14 +39,11 @@ The cornerstone of agent development, this class contains all the necessary info
 
 - `getPacmanPosition()`: Returns Pac-Man's current position.
 - `getPacmanTarget()`: Returns the position of the node that Pac-Man is currently moving towards.
-
 - `getNodeList()`: Returns a list of all nodes in the current level.
 - `getNodeFromVector()`: Returns the node at the provided vector. If no node is found, None is returned.
 - `getNodeNeighborList()`: Returns a list of the provided node's neighbors.
-
 - `getPelletPositions()`: Returns a list of all non-eaten pellets' position.
 - `getPowerPelletPositions()`: Returns a list of all non-eaten power-pellets' position.
-
 - `getGhostModes()`: Returns a list of all ghosts' modes.
 - `getGhostCommonMode()`: Returns the mode that most ghosts are in (CHASE, SCATTER, etc.).
 - `getGhosts()`: Returns a list of the ghost objects.
