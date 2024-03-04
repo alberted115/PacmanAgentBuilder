@@ -22,9 +22,9 @@ class MyFirstAgent(IAgent):
         # DebugHelper.drawMap(obs)
 
         pacmanPosition = obs.getPacmanPosition()
-        pacmanTarget = obs.getPacmanTarget()
+        pacmanTarget = obs.getPacmanTargetPosition()
 
-        # draw a purple line to pacman's target
+        # draw a purple line from pacman to pacman's target
         DebugHelper.drawLine(pacmanPosition, pacmanTarget, DebugHelper.PURPLE, 5)
         # if pacman is on a node, move to a random direction
         if pacmanPosition == pacmanTarget:

@@ -4,6 +4,7 @@ from collections import Counter
 
 from Pacman_Complete.constants import *
 from Pacman_Complete.ghosts import Blinky, Ghost, Pinky, Inky, Clyde
+from Pacman_Complete.nodes import Node
 from Pacman_Complete.vector import Vector2
 
 
@@ -11,6 +12,7 @@ class Observation(object):
     """
     The Observation class contains all the necessary information that the agent will need to play the game:
     """
+
     def __init__(self, gameController):
         self.ghostGroup = gameController.ghosts
         self.pelletGroup = gameController.pellets
@@ -25,15 +27,39 @@ class Observation(object):
             :return: Pac-Man's current position.
         """
         if self.pacman.overshotTarget():
-            return self.getPacmanTarget()
+            return self.getPacmanTargetPosition()
 
-        return Vector2(round(self.pacman.position.x), round(self.pacman.position.y))
+        return Vector2(int(self.pacman.position.x), int(self.pacman.position.y))
 
-    def getPacmanTarget(self) -> Vector2:
+    def getPacmanTargetPosition(self) -> Vector2:
         """
             :return: Returns the Node that Pac-Man is currently moving towards.
         """
         return self.pacman.target.position
+
+    # ------------------ Node Functions ------------------
+    def getNodeList(self) -> list[Node]:
+        """
+            :return: Returns a list of all nodes in the level.
+        """
+        return list(self.nodeGroup.nodesLUT.values())
+
+    def getNodeFromVector(self, vector: Vector2) -> Node | None:
+        """
+            :param vector: The provided vector.
+            :return: Returns the node at the provided vector. If no node is found, None is returned.
+        """
+        nodeKey = (int(vector.x), int(vector.y))
+        if nodeKey in self.nodeGroup.nodesLUT.keys():
+            return self.nodeGroup.nodesLUT[nodeKey]
+        return None
+
+    def getNodeNeighborList(self, node: Node) -> list[Node]:
+        """
+            :param node: The provided node.
+            :return: Returns a list of the provided node's neighbors.
+        """
+        return [neighbor for neighbor in node.neighbors.values() if neighbor is not None]
 
     # ------------------ Pellet Functions ------------------
     def getPelletPositions(self) -> list[Vector2]:
