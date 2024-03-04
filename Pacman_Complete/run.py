@@ -251,13 +251,12 @@ class GameController(object):
     def render(self):
         self.screen.blit(self.background, (0, 0))
 
-        # self.nodes.render(self.screen)
-
         self.pellets.render(self.screen)
         if self.fruit is not None:
             self.fruit.render(self.screen)
         self.pacman.render(self.screen)
-        self.ghosts.render(self.screen)
+        if self.ghostsEnabled:
+            self.ghosts.render(self.screen)
         self.textgroup.render(self.screen)
 
         for i in range(len(self.lifesprites.images)):
