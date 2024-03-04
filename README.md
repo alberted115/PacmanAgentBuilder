@@ -4,7 +4,7 @@ PacmanAgentBuilder enhances the game of Pac-Man from [pacmancode.com](https://pa
 
 ## Getting Started
 
-To dive into agent development, follow these steps:
+To get started agent building, follow these steps:
 
 1. Fork and clone the repository to your local machine.
 2. (Optional) Set up a dedicated Python interpreter for the project on your system.
