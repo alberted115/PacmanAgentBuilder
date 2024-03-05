@@ -63,7 +63,7 @@ def calculatePerformanceOverXGames(agentClass: type[IAgent], gameCount: int, gam
         if logging:
             print(f"Running game {i + 1} of {gameCount}...")
 
-        gameStats.append(runGameWithAgent(agentClass, gameSpeed=gameSpeed, startLives=1, startLevel=startLevel,
+        gameStats.append(runGameWithAgent(agentClass, gameSpeed=gameSpeed, startLives=3, startLevel=startLevel,
                                           ghostsEnabled=ghostsEnabled, freightEnabled=freightEnabled,
                                           lockDeltaTime=lockDeltaTime))
 
