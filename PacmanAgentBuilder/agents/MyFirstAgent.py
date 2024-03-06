@@ -1,4 +1,5 @@
 import random
+from time import sleep
 
 import pygame
 from pygame import K_UP, K_DOWN, K_LEFT, K_RIGHT
@@ -20,6 +21,8 @@ class MyFirstAgent(IAgent):
     def calculateNextMove(self, obs: Observation):
         # uncomment this to draw the graph of the current level to the screen:
         # DebugHelper.drawMap(obs)
+
+        # sleep(0.01)
 
         pacmanPosition = obs.getPacmanPosition()
         pacmanTarget = obs.getPacmanTargetPosition()
