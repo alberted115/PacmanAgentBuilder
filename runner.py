@@ -1,9 +1,10 @@
-from PacmanAgentBuilder.agents.MyFirstAgent import MyFirstAgent
+from PacmanAgentBuilder.agents.AlbertAgent import AlbertAgent
+from PacmanAgentBuilder.agents.AlbertAgent2 import AlbertAgent2
 from PacmanAgentBuilder.utils.runnerFunctions import *
 
 
 stats = calculatePerformanceOverXGames(
-    agentClass=MyFirstAgent,  # Specify the agent to be evaluated.
+    agentClass=AlbertAgent2,  # Specify the agent to be evaluated.
     gameCount=10,  # Number of games the agent will play.
     gameSpeed=1,  # Sets the speed of the game from 0.1 (slow) to 5 (fast). For a higher speed, enable lockDeltaTime.
     startLevel=0,  # Choose the starting level for the agent (0 for level one, 1 for level two, and so on).

@@ -28,7 +28,20 @@ class Node(object):
                 line_end = self.neighbors[n].position.asTuple()
                 pygame.draw.line(screen, WHITE, line_start, line_end, 1)
                 pygame.draw.circle(screen, RED, self.position.asInt(), 4)
+    def get_neighbors(self):
+        neighbors = []
+        if self.neighbors[UP] != None:
+            neighbors.append(self.neighbors[UP])
 
+        if self.neighbors[DOWN] != None:
+            neighbors.append(self.neighbors[DOWN])
+
+        if self.neighbors[LEFT] != None:
+            neighbors.append(self.neighbors[LEFT])
+
+        if self.neighbors[RIGHT] != None:
+            neighbors.append(self.neighbors[RIGHT])
+        return neighbors
 
 class NodeGroup(object):
     def __init__(self, level):

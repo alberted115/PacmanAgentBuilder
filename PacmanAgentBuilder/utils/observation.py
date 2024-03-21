@@ -139,3 +139,6 @@ class Observation(object):
             :return: Returns the Clyde object.
         """
         return self.ghostGroup.clyde
+
+    def getPacman(self):
+        return self.pacman

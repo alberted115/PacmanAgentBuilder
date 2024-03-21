@@ -50,3 +50,9 @@ class Vector2(object):
 
     def __str__(self):
         return "<" + str(self.x) + ", " + str(self.y) + ">"
+
+    def manhattanDistance(self, other):
+        return abs(self.x - other.x) + abs(self.y - other.y)
+
+    def euclideanDistance(self, other):
+        return math.sqrt((self.x - other.x) ** 2 + (self.y - other.y) ** 2)

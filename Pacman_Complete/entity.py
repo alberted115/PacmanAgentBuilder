@@ -52,6 +52,7 @@ class Entity(object):
     def getNewTarget(self, direction):
         if self.validDirection(direction):
             return self.node.neighbors[direction]
+        print("Entity: Invalid direction")
         return self.node
 
     def overshotTarget(self):
