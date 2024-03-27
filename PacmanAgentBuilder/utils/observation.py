@@ -19,6 +19,7 @@ class Observation(object):
         self.fruitNode = gameController.fruitNode
         self.pacman = gameController.pacman
         self.nodeGroup = gameController.nodes
+        self.gameController = gameController
 
 
     # ------------------ Pacman Functions ------------------
@@ -149,3 +150,5 @@ class Observation(object):
         if self.fruitNode is None:
             return None
         return self.fruitNode.position
+    def getPelletTime(self):
+        return self.gameController.powerPelletTime

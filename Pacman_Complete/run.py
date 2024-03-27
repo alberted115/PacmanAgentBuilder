@@ -52,7 +52,7 @@ class GameController(object):
         self.fruitCaptured = []
         self.fruitNode = None
         self.mazedata = MazeData()
-        #self.powerPelletTime = 0
+        self.powerPelletTime = 0
 
     def setBackground(self):
         self.background_norm = pygame.surface.Surface(SCREENSIZE).convert()
@@ -100,7 +100,7 @@ class GameController(object):
         else:
             dt = self.clock.tick(30 * self.gameSpeed) / (1000.0 / self.gameSpeed)
 
-        #self.powerPelletTime -= dt
+        self.powerPelletTime -= dt
 
         self.textgroup.update(dt)
         self.pellets.update(dt)
@@ -172,7 +172,7 @@ class GameController(object):
                 self.ghosts.clyde.startNode.allowAccess(LEFT, self.ghosts.clyde)
             self.pellets.pelletList.remove(pellet)
             if pellet.name == POWERPELLET:
-                #self.powerPelletTime = 3
+                self.powerPelletTime = 5
                 if self.freightEnabled:
                     self.ghosts.startFreight()
             if self.pellets.isEmpty():

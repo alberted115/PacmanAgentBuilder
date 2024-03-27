@@ -14,7 +14,7 @@ class HumanAgent(IAgent):
     def __init__(self, gameController):
         super().__init__(gameController)
 
-    def calculateNextMove(self):
+    def calculateNextMove(self,obs: Observation):
         obs = Observation(self.gameController)
         self.takeStats()
 

@@ -31,6 +31,7 @@ class AlbertAgent2(IAgent):
 
         nodes = obs.getNodeList()
 
+        pelletTime=obs.getPelletTime()
 
 
         pacmanTArget = obs.getPacman().target
@@ -51,7 +52,7 @@ class AlbertAgent2(IAgent):
                     wasPortal = False
                     if direction == PORTAL:
                         wasPortal = True
-                        if node.neighbors[neighbor].position.x< - newNode.position.x:
+                        if node.neighbors[neighbor].position.x > newNode.position.x:
                             direction = LEFT
                         else:
                             direction = RIGHT
@@ -63,7 +64,10 @@ class AlbertAgent2(IAgent):
 
 
                     if (wasPortal):
-                        newNode.costs[direction] = 0.1
+                        if newNode.position.y <200:
+                            newNode.costs[direction] = 500
+                        else:
+                            newNode.costs[direction] = 0.1
                     else:
                         newNode.costs[direction] = (newNode.neighbors[direction].position - newNode.position).magnitude()
 
@@ -76,79 +80,82 @@ class AlbertAgent2(IAgent):
         pacmanNode = oldToNew[obs.getPacman().node]
 
 
+        if pelletTime <=0:
+            for ghost in obs.getGhosts():
+                ghostNodes = alg.get_edge_from_positionX(newNodes, ghost.position)
+                foundInBetween = False
 
-        for ghost in obs.getGhosts():
-            ghostNodes = alg.get_edge_from_positionX(newNodes, ghost.position)
-            foundInBetween = False
-
-            if ghostNodes is not None:
-                ghostNode1, ghostNode2 = ghostNodes
+                if ghostNodes is not None:
+                    ghostNode1, ghostNode2 = ghostNodes
 
 
 
-                # remove edge between ghost nodes
-                if ghostNode1.neighbors[UP] == ghostNode2:
-                    pacmanInBetween = ghostNode1.position.x == pacmanNode.position.x and ((
-                                                                                                      ghostNode1.position.y > pacmanNode.position.y and ghostNode1.position.y < ghostNode2.position.y) or (
-                                                                                                      ghostNode1.position.y < pacmanNode.position.y and ghostNode1.position.y > ghostNode2.position.y))
-                    if pacmanInBetween:
-                        foundInBetween = True
-                        if obs.getPacmanPosition().y < ghostNode1.position.y:
-                            ghostNode2.neighbors[DOWN] = None
+                    # remove edge between ghost nodes
+                    if ghostNode1.neighbors[UP] == ghostNode2:
+                        pacmanInBetween = ghostNode1.position.x == pacmanNode.position.x and ((
+                                                                                                          ghostNode1.position.y > pacmanNode.position.y and ghostNode1.position.y < ghostNode2.position.y) or (
+                                                                                                          ghostNode1.position.y < pacmanNode.position.y and ghostNode1.position.y > ghostNode2.position.y))
+                        if pacmanInBetween:
+                            foundInBetween = True
+                            if obs.getPacmanPosition().y < ghostNode1.position.y:
+                                ghostNode2.neighbors[DOWN] = None
+                            else:
+                                ghostNode1.neighbors[UP] = None
                         else:
                             ghostNode1.neighbors[UP] = None
-                    else:
-                        ghostNode1.neighbors[UP] = None
-                        ghostNode2.neighbors[DOWN] = None
+                            ghostNode2.neighbors[DOWN] = None
 
-                if ghostNode1.neighbors[DOWN] == ghostNode2:
-                    pacmanInBetween = ghostNode1.position.x == pacmanNode.position.x and ((
-                                                                                                      ghostNode1.position.y > pacmanNode.position.y and ghostNode1.position.y < ghostNode2.position.y) or (
-                                                                                                      ghostNode1.position.y < pacmanNode.position.y and ghostNode1.position.y > ghostNode2.position.y))
-                    if pacmanInBetween:
-                        foundInBetween = True
-                        if obs.getPacmanPosition().y < ghostNode1.position.y:
-                            ghostNode1.neighbors[DOWN] = None
+                    if ghostNode1.neighbors[DOWN] == ghostNode2:
+                        pacmanInBetween = ghostNode1.position.x == pacmanNode.position.x and ((
+                                                                                                          ghostNode1.position.y > pacmanNode.position.y and ghostNode1.position.y < ghostNode2.position.y) or (
+                                                                                                          ghostNode1.position.y < pacmanNode.position.y and ghostNode1.position.y > ghostNode2.position.y))
+                        if pacmanInBetween:
+                            foundInBetween = True
+                            if obs.getPacmanPosition().y < ghostNode1.position.y:
+                                ghostNode1.neighbors[DOWN] = None
+                            else:
+                                ghostNode2.neighbors[UP] = None
                         else:
+                            ghostNode1.neighbors[DOWN] = None
                             ghostNode2.neighbors[UP] = None
-                    else:
-                        ghostNode1.neighbors[DOWN] = None
-                        ghostNode2.neighbors[UP] = None
 
-            ghostNodes = alg.get_edge_from_positionY(newNodes, ghost.position)
-            if ghostNodes is not None:
-                ghostNode1, ghostNode2 = ghostNodes
+                ghostNodes = alg.get_edge_from_positionY(newNodes, ghost.position)
+                if ghostNodes is not None:
+                    ghostNode1, ghostNode2 = ghostNodes
 
-                if ghostNode1.neighbors[LEFT] == ghostNode2:
-                    pacmanInBetween = ghostNode1.position.y == pacmanNode.position.y and ((ghostNode1.position.x > pacmanNode.position.x and ghostNode1.position.x < ghostNode2.position.x) or (ghostNode1.position.x < pacmanNode.position.x and ghostNode1.position.x > ghostNode2.position.x))
+                    if ghostNode1.neighbors[LEFT] == ghostNode2:
+                        pacmanInBetween = ghostNode1.position.y == pacmanNode.position.y and ((ghostNode1.position.x > pacmanNode.position.x and ghostNode1.position.x < ghostNode2.position.x) or (ghostNode1.position.x < pacmanNode.position.x and ghostNode1.position.x > ghostNode2.position.x))
 
-                    if pacmanInBetween:
-                        foundInBetween = True
-                        if obs.getPacmanPosition().x < ghostNode1.position.x:
-                            ghostNode2.neighbors[RIGHT] = None
+                        if pacmanInBetween:
+                            foundInBetween = True
+                            if obs.getPacmanPosition().x < ghostNode1.position.x:
+                                ghostNode2.neighbors[RIGHT] = None
+                            else:
+                                ghostNode1.neighbors[LEFT] = None
                         else:
                             ghostNode1.neighbors[LEFT] = None
-                    else:
-                        ghostNode1.neighbors[LEFT] = None
-                        ghostNode2.neighbors[RIGHT] = None
+                            ghostNode2.neighbors[RIGHT] = None
 
-                if ghostNode1.neighbors[RIGHT] == ghostNode2:
-                    pacmanInBetween = ghostNode1.position.y == pacmanNode.position.y and ((ghostNode1.position.x > pacmanNode.position.x and ghostNode1.position.x < ghostNode2.position.x) or (ghostNode1.position.x < pacmanNode.position.x and ghostNode1.position.x > ghostNode2.position.x))
-                    if pacmanInBetween:
-                        foundInBetween = True
-                        if obs.getPacmanPosition().x < ghostNode1.position.x:
-                            ghostNode1.neighbors[RIGHT] = None
+                    if ghostNode1.neighbors[RIGHT] == ghostNode2:
+                        pacmanInBetween = ghostNode1.position.y == pacmanNode.position.y and ((ghostNode1.position.x > pacmanNode.position.x and ghostNode1.position.x < ghostNode2.position.x) or (ghostNode1.position.x < pacmanNode.position.x and ghostNode1.position.x > ghostNode2.position.x))
+                        if pacmanInBetween:
+                            foundInBetween = True
+                            if obs.getPacmanPosition().x < ghostNode1.position.x:
+                                ghostNode1.neighbors[RIGHT] = None
+                            else:
+                                ghostNode2.neighbors[LEFT] = None
                         else:
+                            ghostNode1.neighbors[RIGHT] = None
                             ghostNode2.neighbors[LEFT] = None
-                    else:
-                        ghostNode1.neighbors[RIGHT] = None
-                        ghostNode2.neighbors[LEFT] = None
 
-            if not foundInBetween and len(obs.getPelletPositions())>30:
-                ghostTarget = oldToNew[ghost.target]
-                for direction in ghostTarget.neighbors.keys():
-                    if ghostTarget.neighbors[direction] is not None:
-                        ghostTarget.costs[direction] += 100
+                if not foundInBetween and len(obs.getPelletPositions())>30:
+                    ghostTarget = oldToNew[ghost.target]
+                    for direction in ghostTarget.neighbors.keys():
+                        if ghostTarget.neighbors[direction] is not None:
+                            toAdd = 100
+                            if ghost.mode==SPAWN:
+                                toAdd = 300
+                            ghostTarget.costs[direction] += toAdd
 
 
         previousNodes, shortestpaths  = alg.dijkstra(newNodes, pacmanNode)
@@ -173,85 +180,47 @@ class AlbertAgent2(IAgent):
 
 
         def runAwayFromGhostDrection(direction):
+
+            if pelletTime> 0:
+                return direction
+
             otherAxisThreshold = 20
             ownAxisThreshold= 50
 
             validDirections = obs.getPacman().validDirections()
 
-            closestGhostUp = 10000
-            closestGhostDown = 10000
-            closestGhostLeft = 10000
-            closestGhostRight = 10000
+            closestGhosts={}
+
+            closestGhosts[UP] = 10000
+            closestGhosts[DOWN] = 10000
+            closestGhosts[LEFT] = 10000
+            closestGhosts[RIGHT] = 10000
+
+
 
             for ghost in obs.getGhostPositions():
                 distance = pacmanPosition.euclideanDistance(ghost)
                 if abs(ghost.x - pacmanPosition.x)<=otherAxisThreshold and ghost.y < pacmanPosition.y:
-                    if distance < closestGhostUp:
-                        closestGhostUp = distance
+                    if distance < closestGhosts[UP]:
+                        closestGhosts[UP] = distance
                 if abs(ghost.x - pacmanPosition.x)<=otherAxisThreshold and pacmanPosition.y < ghost.y :
-                    if distance < closestGhostDown:
-                        closestGhostDown = distance
+                    if distance <  closestGhosts[DOWN]:
+                        closestGhosts[DOWN] = distance
 
                 if  abs(ghost.y - pacmanPosition.y)<=otherAxisThreshold and ghost.x < pacmanPosition.x:
-                    if distance < closestGhostLeft:
-                        closestGhostLeft = distance
+                    if distance < closestGhosts[LEFT]:
+                        closestGhosts[LEFT] = distance
                 if abs(ghost.y - pacmanPosition.y)<=otherAxisThreshold and pacmanPosition.x < ghost.x:
-                    if distance < closestGhostRight:
-                        closestGhostRight = distance
+                    if distance < closestGhosts[RIGHT]:
+                        closestGhosts[RIGHT] = distance
 
-            if direction== UP and  closestGhostUp < ownAxisThreshold:
+            if direction != 0 and closestGhosts[direction] < ownAxisThreshold:
 
-                if closestGhostRight > closestGhostUp and RIGHT in validDirections:
-                    return RIGHT
-
-                if closestGhostLeft > closestGhostUp and LEFT in validDirections:
-                    return LEFT
-
-                if closestGhostDown > closestGhostUp and DOWN in validDirections:
-                    return DOWN
-
-
-            if direction== DOWN and closestGhostDown < ownAxisThreshold:
-                if closestGhostRight > closestGhostDown and RIGHT in validDirections:
-                    return RIGHT
-
-                if closestGhostLeft > closestGhostDown and LEFT in validDirections:
-                    return LEFT
-
-
-                if  closestGhostUp > closestGhostDown and UP in validDirections:
-                    return UP
-
-            if direction== LEFT and closestGhostLeft < ownAxisThreshold:
-
-                if closestGhostUp > closestGhostLeft and UP in validDirections:
-                    return UP
-
-                if closestGhostDown > closestGhostLeft and DOWN in validDirections:
-                    return DOWN
-
-                if closestGhostRight > closestGhostLeft and RIGHT in validDirections:
-                    return RIGHT
-
-            if direction== RIGHT and closestGhostRight < ownAxisThreshold:
-
-                if closestGhostUp > closestGhostRight and UP in validDirections:
-                    return UP
-
-                if closestGhostDown > closestGhostRight and DOWN in validDirections:
-                    return DOWN
-
-
-                if closestGhostLeft > closestGhostRight and LEFT in validDirections:
-                    return LEFT
-
+                validDirections.sort(key=lambda x: closestGhosts[x])
+                validDirections.reverse()
+                return validDirections[0]
 
             return direction
-
-
-
-
-
 
         pacmanNodes  = alg.get_edge_from_position(newNodes, obs.getPacmanPosition())
 
@@ -331,7 +300,7 @@ class AlbertAgent2(IAgent):
 
         pellet_to_target=Vector2(0,0)
 
-        if GetTotalGhostDistance(pacmanPosition) < 500:
+        if GetTotalGhostDistance(pacmanPosition) < 500 and pelletTime<=0:
             pellet_to_target = max(pellets, key=lambda x: GetTotalGhostDistance(x))
             #pellet_to_target = min(pellets, key=lambda x: getPelletDistance(x))
         else:
