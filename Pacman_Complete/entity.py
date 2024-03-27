@@ -21,6 +21,8 @@ class Entity(object):
         self.setStartNode(node)
         self.image = None
 
+        self.atIntersection = False
+
     def setPosition(self):
         self.position = self.node.position.copy()
 
@@ -56,11 +58,16 @@ class Entity(object):
         return self.node
 
     def overshotTarget(self):
+        self.atIntersection = False
         if self.target is not None:
             vec1 = self.target.position - self.node.position
             vec2 = self.position - self.node.position
             node2Target = vec1.magnitudeSquared()
             node2Self = vec2.magnitudeSquared()
+
+            if node2Self >= node2Target:
+                self.atIntersection = True
+                return True
             return node2Self >= node2Target
         return False
 

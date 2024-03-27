@@ -12,6 +12,7 @@ class Node(object):
                        DOWN: [PACMAN, BLINKY, PINKY, INKY, CLYDE, FRUIT],
                        LEFT: [PACMAN, BLINKY, PINKY, INKY, CLYDE, FRUIT],
                        RIGHT: [PACMAN, BLINKY, PINKY, INKY, CLYDE, FRUIT]}
+        self.costs = {UP: None, DOWN: None, LEFT: None, RIGHT: None, PORTAL: None}
 
     def denyAccess(self, direction, entity):
         if entity.name in self.access[direction]:
@@ -41,6 +42,7 @@ class Node(object):
 
         if self.neighbors[RIGHT] != None:
             neighbors.append(self.neighbors[RIGHT])
+
         return neighbors
 
 class NodeGroup(object):

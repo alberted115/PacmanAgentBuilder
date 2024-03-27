@@ -16,8 +16,10 @@ class Observation(object):
     def __init__(self, gameController):
         self.ghostGroup = gameController.ghosts
         self.pelletGroup = gameController.pellets
+        self.fruitNode = gameController.fruitNode
         self.pacman = gameController.pacman
         self.nodeGroup = gameController.nodes
+
 
     # ------------------ Pacman Functions ------------------
 
@@ -142,3 +144,8 @@ class Observation(object):
 
     def getPacman(self):
         return self.pacman
+
+    def getFruitPosition(self) -> Vector2:
+        if self.fruitNode is None:
+            return None
+        return self.fruitNode.position

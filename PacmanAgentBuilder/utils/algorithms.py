@@ -11,8 +11,14 @@ def dijkstra(nodes, start_node):
         shortest_path[node] = max_value
     shortest_path[start_node] = 0
 
+    loopCount = 0
 
     while unvisited_nodes:
+        if loopCount > 1000:
+            return None
+
+
+
         current_min_node = None
         for node in unvisited_nodes:
             if current_min_node == None:
@@ -21,21 +27,14 @@ def dijkstra(nodes, start_node):
                 current_min_node = node
 
 
-        neighbors = []
-        if current_min_node.neighbors[UP] != None:
-            neighbors.append(current_min_node.neighbors[UP])
 
-        if current_min_node.neighbors[DOWN] != None:
-            neighbors.append(current_min_node.neighbors[DOWN])
+        for direction in  [UP,DOWN,LEFT,RIGHT]:
+            if current_min_node.neighbors[direction] == None:
+                continue
+            neighbor = current_min_node.neighbors[direction]
 
-        if current_min_node.neighbors[LEFT] != None:
-            neighbors.append(current_min_node.neighbors[LEFT])
 
-        if current_min_node.neighbors[RIGHT] != None:
-            neighbors.append(current_min_node.neighbors[RIGHT])
-
-        for neighbor in neighbors:
-            tentative_value = shortest_path[current_min_node] + (neighbor.position - current_min_node.position).magnitude()
+            tentative_value = shortest_path[current_min_node] + current_min_node.costs[direction]
             if tentative_value < shortest_path[neighbor]:
                 shortest_path[neighbor] = tentative_value
                 # We also update the best path to the current node
@@ -43,6 +42,8 @@ def dijkstra(nodes, start_node):
  
         # After visiting its neighbors, we mark the node as "visited"
         unvisited_nodes.remove(current_min_node)
+
+        loopCount += 1
     
     return previous_nodes, shortest_path
 
@@ -115,6 +116,35 @@ def get_edge_from_position(nodes, point):
         if node.position.y == point.y:
             for neighbor in node.get_neighbors():
                 if neighbor.position.y==point.y and ((neighbor.position.x >= point.x and point.x >= node.position.x) or (neighbor.position.x <= point.x and point.x <= node.position.x)) :
+                    return (node, neighbor)
+
+    return None
+
+
+def get_edge_from_positionX(nodes, point):
+    for node in nodes:
+        if node.position.x == point.x:
+            for neighbor in node.get_neighbors():
+                if  neighbor.position.x==point.x and ((neighbor.position.y >= point.y and point.y >= node.position.y) or (neighbor.position.y <= point.y and point.y <= node.position.y)) :
+                    return (node, neighbor)
+
+
+    return None
+
+def get_edge_from_positionY(nodes, point):
+    for node in nodes:
+        if node.position.x == point.x:
+            for neighbor in node.get_neighbors():
+                if neighbor.position.x == point.x and (
+                        (neighbor.position.y >= point.y and point.y >= node.position.y) or (
+                        neighbor.position.y <= point.y and point.y <= node.position.y)):
+                    return (node, neighbor)
+
+        if node.position.y == point.y:
+            for neighbor in node.get_neighbors():
+                if neighbor.position.y == point.y and (
+                        (neighbor.position.x >= point.x and point.x >= node.position.x) or (
+                        neighbor.position.x <= point.x and point.x <= node.position.x)):
                     return (node, neighbor)
 
     return None

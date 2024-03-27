@@ -20,6 +20,8 @@ class Pacman(Entity):
         self.alive = True
         self.sprites = PacmanSprites(self)
 
+        self.powerPelletTime=0
+
     def reset(self):
         Entity.reset(self)
         self.direction = LEFT
@@ -33,10 +35,11 @@ class Pacman(Entity):
         self.direction = STOP
 
     def update(self, dt):
+
         self.sprites.update(dt)
         self.position += self.directions[self.direction] * self.speed * dt
         if self.overshotTarget():
-            print("Pacman: Overshot target")
+            #print("Pacman: Overshot target")
             self.node = self.target
             if self.node.neighbors[PORTAL] is not None:
                 self.node = self.node.neighbors[PORTAL]
@@ -45,7 +48,7 @@ class Pacman(Entity):
             if self.target is not self.node:
                 self.direction = direction
             else:
-                print("Pacman: Target is node")
+                #print("Pacman: Target is node")
                 self.target = self.getNewTarget(self.direction)
 
             if self.target is self.node:
@@ -56,7 +59,7 @@ class Pacman(Entity):
             if self.oppositeDirection(self.getValidKey()):
                 self.reverseDirection()
 
-        print(self.direction)
+
 
     def getValidKey(self):
         self.agent.takeStats()
@@ -91,3 +94,14 @@ class Pacman(Entity):
             directions.append(self.direction * -1)
         return directions
 
+    def validDirection(self, direction):
+        if direction is not STOP:
+            if not self.atIntersection:
+                if direction == self.direction or direction == self.direction * -1:
+                    return True
+                else:
+                    return False
+            if self.name in self.node.access[direction]:
+                if self.node.neighbors[direction] is not None:
+                    return True
+        return False
