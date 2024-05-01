@@ -3,7 +3,7 @@ from PacmanAgentBuilder.utils.gameStats import GameStats
 from Pacman_Complete.run import GameController
 
 
-def runGameWithAgent(agentType: type[IAgent], gameSpeed=3, startLives=3, startLevel: int = 0,
+def runGameWithAgent(agentType: type[IAgent], gameSpeed=3, startLives=5, startLevel: int = 0,
                      ghostsEnabled: bool = True, freightEnabled: bool = True, lockDeltaTime: bool = False) -> GameStats:
     """
         Runs a single game with the specified agent.
@@ -63,7 +63,7 @@ def calculatePerformanceOverXGames(agentClass: type[IAgent], gameCount: int, gam
         if logging:
             print(f"Running game {i + 1} of {gameCount}...")
 
-        gameStats.append(runGameWithAgent(agentClass, gameSpeed=gameSpeed, startLives=3, startLevel=startLevel,
+        gameStats.append(runGameWithAgent(agentClass, gameSpeed=gameSpeed, startLives=5, startLevel=startLevel,
                                           ghostsEnabled=ghostsEnabled, freightEnabled=freightEnabled,
                                           lockDeltaTime=lockDeltaTime))
 

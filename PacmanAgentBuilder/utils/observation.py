@@ -152,3 +152,9 @@ class Observation(object):
         return self.fruitNode.position
     def getPelletTime(self):
         return self.gameController.powerPelletTime
+
+    def getLives(self):
+        return self.gameController.lives
+
+    def getScore(self):
+        return self.gameController.score
